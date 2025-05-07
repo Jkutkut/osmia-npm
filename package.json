@@ -1,0 +1,20 @@
+{
+  "name": "osmia-npm",
+  "collaborators": [
+    "jkutkut <45950243+Jkutkut@users.noreply.github.com>"
+  ],
+  "description": "osmia as a wasm npm package",
+  "version": "0.1.5",
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jkutkut/osmia-npm"
+  },
+  "files": [
+    "osmia_npm_bg.wasm",
+    "osmia_npm.js",
+    "osmia_npm.d.ts"
+  ],
+  "main": "osmia_npm.js",
+  "types": "osmia_npm.d.ts"
+}
