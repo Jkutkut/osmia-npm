@@ -86,6 +86,8 @@ build_release:
 	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint ${WASM_PACK} ${DEV_IMAGE_NAME} build --target nodejs -d pkg-node
 
 publish_release:
+	@echo "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)" > /tmp/osmia-npm-version.txt
+	@git rev-list "$(shell cat /tmp/osmia-npm-version.txt)" > /dev/null 2> /dev/null || (echo "Error: Tag already exists" && false)
 	@echo "Ensuring repo has no uncommited changes..."
 	@git diff --quiet && git diff --cached --quiet || (echo "Error: Repository not clean" && false)
 	@echo "${REPO} is clean."
@@ -95,7 +97,6 @@ publish_release:
 	echo "Preparing for commit..."
 	rm -rf /tmp/osmia-npm-release
 	cp -r pkg-node /tmp/osmia-npm-release
-	echo "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)" > /tmp/osmia-npm-version.txt
 	echo "Committing release..."
 	@git checkout stable
 	@rm -rf ./*
