@@ -122,3 +122,14 @@ clean:
 	@rm -rf pkg-node 2> /dev/null || sudo rm -rf pkg-node
 	@rm -rf pkg 2> /dev/null || sudo rm -rf pkg
 	@rm -rf target 2> /dev/null || sudo rm -rf target
+
+# ****** Git Hooks ******
+prepare_commit: hooks
+	${EDITOR} Cargo.toml
+	make test
+	git add Cargo.toml Cargo.lock; git add -N .;
+	git add -p
+
+hooks:
+	git config core.hooksPath .githooks
+	# git config --unset core.hooksPath
