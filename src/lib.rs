@@ -1,7 +1,10 @@
 use wasm_bindgen::prelude::*;
 use osmia::Osmia;
 
-pub const VERSION: &str = env!("CARGO_PKG_VERSION");
+#[cfg(test)]
+mod test;
+
+const VERSION: &str = env!("CARGO_PKG_VERSION");
 
 fn run_osmia(mut osmia: Osmia, code: &str) -> Result<String, String> {
 	osmia.run_code(&format!("{{{{ _OSMIA_NPM_VERSION = \"{}\" }}}}", VERSION)).unwrap();

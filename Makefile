@@ -58,6 +58,12 @@ remove_images:
 	docker rmi ${RELEASE_IMAGE_NAME}
 	@#docker rmi ${LATEST_IMAGE_NAME}
 
+test:
+	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint cargo ${DEV_IMAGE_NAME} test
+
+test_watch:
+	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint cargo ${DEV_IMAGE_NAME} watch --clear test
+
 WASM_PACK = wasm-pack
 build_dev:
 	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint ${WASM_PACK} ${DEV_IMAGE_NAME} build --target web
