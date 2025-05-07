@@ -1,15 +1,55 @@
 <!doctype html>
 <html lang="en-US">
-  <head>
-    <meta charset="utf-8" />
-    <title>osmia-npm with wasm</title>
-  </head>
-  <body>
-    <script type="module">
-      import init, { foo } from "./pkg/osmia_npm.js";
-      init().then(() => {
-        console.log(foo());
-      });
-    </script>
-  </body>
+    <head>
+        <meta charset="utf-8" />
+        <title>osmia-npm with wasm</title>
+    </head>
+    <body>
+        <div id="root">
+            <textarea type="text" id="text" placeholder="Enter code" rows="25"></textarea>
+            <button id="run">Run</button>
+            <pre id="output"></pre>
+        </div>
+        <script type="module">
+            import init, { run } from "./pkg/osmia_npm.js";
+            init().then(() => {
+                const codeContainer = document.getElementById("text");
+                const resultContainer = document.getElementById("output");
+                const btn = document.getElementById("run");
+
+                btn.addEventListener("click", () => {
+                    const code = codeContainer.value;
+                    let result;
+                    try {
+                        result = run(code);
+                    } catch (e) {
+                        result = e;
+                    }
+                    console.debug("code", code, "result", result);
+                    resultContainer.innerHTML = result;
+                });
+
+                codeContainer.value = `
+Osmia {{ _OSMIA_VERSION }} - npm {{ "TODO" }}
+{{for f in ["foo", "bar", "baz"]}}
+    {{f}}
+{{done}}
+`.trim();
+            });
+        </script>
+    <style>
+        body, #root {
+            display: flex;
+            flex-direction: column;
+        }
+
+        #root {
+            max-width: 800px;
+            gap: 10px;
+        }
+
+        #run {
+            padding: 10px;
+        }
+    </body>
 </html>

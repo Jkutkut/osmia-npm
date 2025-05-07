@@ -46,10 +46,6 @@ RELEASE_CONTAINER_NAME = ${NAME}_$(VERSION)
 build_dev_image:
 	docker build -t ${DEV_IMAGE_NAME} --target dev .
 
-build_release_image: build_release_binary
-	@echo "TODO: Not implemented yet"
-	@#docker build -t ${RELEASE_IMAGE_NAME} --target release .
-
 # ****** Docker Containers ******
 stop_dev:
 	docker stop ${DEV_CONTAINER_NAME}
