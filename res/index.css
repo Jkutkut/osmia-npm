@@ -1,0 +1,27 @@
+body, #root {
+    display: flex;
+    flex-direction: column;
+    background-color: #f0f0f0;
+}
+
+#root {
+    gap: 10px;
+}
+
+#run {
+    padding: 10px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+#code, #ctx {
+    width: 100%;
+}
+
+.hide {
+    display: none;
+}
