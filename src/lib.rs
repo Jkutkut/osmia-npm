@@ -12,3 +12,8 @@ fn run_osmia(mut osmia: Osmia, code: &str) -> Result<String, String> {
 pub fn run(code: &str) -> Result<String, String> {
 	run_osmia(Osmia::default(), &code)
 }
+
+#[wasm_bindgen]
+pub fn run_ctx(ctx: &str, code: &str) -> Result<String, String> {
+	run_osmia(Osmia::try_from(ctx)?, &code)
+}

@@ -6,35 +6,79 @@
     </head>
     <body>
         <div id="root">
-            <textarea type="text" id="text" placeholder="Enter code" rows="25"></textarea>
+            <div class="row">
+                <input type="checkbox" id="chkCtx" checked/>
+                <label for="chkCtx">Context</label>
+            </div>
+            <div class="row">
+                <textarea id="code"
+                    type="text"
+                    placeholder="Enter code" rows="25"
+                ></textarea>
+                <textarea id="ctx"
+                    type="text" class=""
+                    placeholder="Enter ctx as json" rows="25"
+                ></textarea>
+            </div>
             <button id="run">Run</button>
             <pre id="output"></pre>
         </div>
         <script type="module">
-            import init, { run } from "./pkg/osmia_npm.js";
+            import init, { run, run_ctx } from "./pkg/osmia_npm.js";
             init().then(() => {
-                const codeContainer = document.getElementById("text");
+                const codeContainer = document.getElementById("code");
+                const ctxContainer = document.getElementById("ctx");
                 const resultContainer = document.getElementById("output");
                 const btn = document.getElementById("run");
+                const chkCtx = document.getElementById("chkCtx");
 
-                btn.addEventListener("click", () => {
+                const runCode = () => {
                     const code = codeContainer.value;
                     let result;
                     try {
-                        result = run(code);
-                    } catch (e) {
+                        if (chkCtx.checked) {
+                            result = run_ctx(ctxContainer.value, code);
+                        }
+                        else {
+                            result = run(code);
+                        }
+                    }
+                    catch (e) {
                         result = e;
                     }
-                    console.debug("code", code, "result", result);
+                    console.table([
+                        {
+                            "variable": "code",
+                            "value": code
+                        },
+                        {
+                            "variable": "ctx",
+                            "value": chkCtx.checked ? ctxContainer.value : null
+                        },
+                        {
+                            "variable": "result",
+                            "value": result
+                        }
+                    ],["variable", "value"]);
                     resultContainer.innerHTML = result;
+                };
+
+                chkCtx.addEventListener("change", () => {
+                    ctxContainer.classList.toggle("hide", !chkCtx.checked);
                 });
+                btn.addEventListener("click", runCode);
 
                 codeContainer.value = `
 Osmia {{ _OSMIA_VERSION }} - npm {{ _OSMIA_NPM_VERSION }}
-{{for f in ["foo", "bar", "baz"]}}
-    {{f}}
-{{done}}
+
+Hello {{ user.name }}!
 `.trim();
+                ctxContainer.value = `
+{
+  "user": {
+    "name": "marvin"
+  }
+}`.trim();
             });
         </script>
     <style>
@@ -44,12 +88,25 @@ Osmia {{ _OSMIA_VERSION }} - npm {{ _OSMIA_NPM_VERSION }}
         }
 
         #root {
-            max-width: 800px;
             gap: 10px;
         }
 
         #run {
             padding: 10px;
+        }
+
+        .row {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+
+        #code, #ctx {
+            width: 100%;
+        }
+
+        .hide {
+            display: none;
         }
     </body>
 </html>
