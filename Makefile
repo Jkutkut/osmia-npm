@@ -1,3 +1,5 @@
+all: build_release
+
 # ****** Operating System ******
 OS = $(shell uname -s)
 ifeq ($(OS),Linux)
@@ -33,15 +35,18 @@ VERSION = "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)"
 DOCKER_REPO = jkutkut/
 IMAGE_NAME = ${DOCKER_REPO}${NAME}
 DEV_IMAGE_NAME = ${IMAGE_NAME}:dev
-RELEASE_IMAGE_NAME = ${IMAGE_NAME}:$(VERSION)
-LATEST_IMAGE_NAME = ${IMAGE_NAME}:latest
 DEV_CONTAINER_NAME = ${NAME}_dev
-RELEASE_CONTAINER_NAME = ${NAME}_$(VERSION)
 
 SRC = $(wildcard src/*) \
 	  Cargo.toml \
 	  Makefile \
 	  Dockerfile
+
+test:
+	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint cargo ${DEV_IMAGE_NAME} test
+
+test_watch:
+	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint cargo ${DEV_IMAGE_NAME} watch --clear test
 
 # ****** Makefile stampts ******
 STAMP = .stamps
@@ -58,32 +63,24 @@ ${DOCKER_FILE_STAMP}: Dockerfile
 
 build_dev_image: ${DOCKER_FILE_STAMP}
 
+remove_images:
+	docker rmi ${DEV_IMAGE_NAME}
+
 # ****** Docker Containers ******
 stop_dev:
 	docker stop ${DEV_CONTAINER_NAME}
-
-stop_release:
-	docker stop ${RELEASE_CONTAINER_NAME}
-
-remove_images:
-	docker rmi ${DEV_IMAGE_NAME}
-	docker rmi ${RELEASE_IMAGE_NAME}
-
-test:
-	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint cargo ${DEV_IMAGE_NAME} test
-
-test_watch:
-	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint cargo ${DEV_IMAGE_NAME} watch --clear test
-
-WASM_PACK = wasm-pack
-build_dev:
-	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint ${WASM_PACK} ${DEV_IMAGE_NAME} build --target web
 
 connect_dev:
 	docker exec -it ${DEV_CONTAINER_NAME} sh
 
 terminal_dev:
 	${DOCKER_RUN_IT} ${CODE_VOLUME} ${DEV_IMAGE_NAME}
+
+# ****** Release / Build ******
+
+WASM_PACK = wasm-pack
+build_dev:
+	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint ${WASM_PACK} ${DEV_IMAGE_NAME} build --target web
 
 build_release:
 	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint ${WASM_PACK} ${DEV_IMAGE_NAME} build --target nodejs -d pkg-node
