@@ -59,7 +59,7 @@ dependencies = [
 
 [[package]]
 name = "osmia-npm"
-version = "0.1.11"
+version = "0.1.12"
 dependencies = [
  "osmia",
  "wasm-bindgen",

@@ -92,7 +92,7 @@ ${BUILD_RELEASE_STAMP}: ${SRC} ${STAMP}
 
 publish_release:
 	@echo "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)" > /tmp/osmia-npm-version.txt
-	@git rev-list "$(shell cat /tmp/osmia-npm-version.txt)" > /dev/null 2> /dev/null || (echo "Error: Tag already exists" && false)
+	@git tag --list | grep -q -v "^$(shell cat /tmp/osmia-npm-version.txt)$$" || (echo "Error: Tag already exists" && false)
 	@echo "Ensuring repo has no uncommited changes..."
 	@git diff --quiet && git diff --cached --quiet || (echo "Error: Repository not clean" && false)
 	@echo "${REPO} is clean."
