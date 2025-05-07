@@ -6,7 +6,6 @@ endif
 ifeq ($(OS),Darwin)
 	DIR = ${PWD}
 endif
-# REPO = $(shell echo ${DIR} | sed 's/.*\///') # lowercase
 REPO = $(shell echo ${DIR} | sed 's/.*\///' | tr '[:upper:]' '[:lower:]')
 
 # ****** Rust Constants ******
@@ -28,10 +27,8 @@ terminal_installer:
 	sudo chown -R ${USER}:${USER} .
 
 # ****** Project ******
-# DEV_PORT = 9000
 NAME = $(shell grep -m 1 name Cargo.toml | cut -d '"' -f 2)
 VERSION = "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)"
-
 
 DOCKER_REPO = jkutkut/
 IMAGE_NAME = ${DOCKER_REPO}${NAME}
@@ -56,7 +53,6 @@ stop_release:
 remove_images:
 	docker rmi ${DEV_IMAGE_NAME}
 	docker rmi ${RELEASE_IMAGE_NAME}
-	@#docker rmi ${LATEST_IMAGE_NAME}
 
 test:
 	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint cargo ${DEV_IMAGE_NAME} test
@@ -75,4 +71,30 @@ terminal_dev:
 	${DOCKER_RUN_IT} ${CODE_VOLUME} ${DEV_IMAGE_NAME}
 
 build_release:
-	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint ${WASM_PACK} ${DEV_IMAGE_NAME} build --target bundler
+	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint ${WASM_PACK} ${DEV_IMAGE_NAME} build --target nodejs -d pkg-node
+
+publish_release:
+	@echo "Ensuring repo has no uncommited changes..."
+	@git diff --quiet && git diff --cached --quiet || (echo "Error: Repository not clean" && false)
+	@echo "${REPO} is clean."
+	@echo "Building release..."
+	make build_release
+	sudo chown -R ${USER}:${USER} .
+	echo "Preparing for commit..."
+	rm -rf /tmp/osmia-npm-release
+	cp -r pkg-node /tmp/osmia-npm-release
+	echo "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)" > /tmp/osmia-npm-version.txt
+	echo "Committing release..."
+	@git checkout stable
+	@rm -rf ./*
+	@cp -r /tmp/osmia-npm-release/* .
+	@git add .
+	@cat /tmp/osmia-npm-version.txt | git commit -F -
+	@git tag $(shell cat /tmp/osmia-npm-version.txt)
+	echo "Cleaning up..."
+	@rm -rf /tmp/osmia-npm-release
+	@rm -rf /tmp/osmia-npm-version.txt
+	echo "Done! Publishing release..."
+	@git push
+	@git push --tags
+	@git checkout main
