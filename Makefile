@@ -113,3 +113,9 @@ publish_release:
 	@git push
 	@git push --tags
 	@git checkout main
+
+clean:
+	@rm -rf ${STAMP}
+	@rm -rf pkg-node 2> /dev/null || sudo rm -rf pkg-node
+	@rm -rf pkg 2> /dev/null || sudo rm -rf pkg
+	@rm -rf target 2> /dev/null || sudo rm -rf target
