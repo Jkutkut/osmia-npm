@@ -51,17 +51,18 @@ test_watch:
 # ****** Makefile stampts ******
 STAMP = .stamps
 DOCKER_FILE_STAMP = ${STAMP}/Dockerfile
+BUILD_DEV_STAMP = ${STAMP}/build_dev
+BUILD_RELEASE_STAMP = ${STAMP}/build_release
 
 ${STAMP}:
 	@mkdir -p ${STAMP}
 
 # ****** Docker Images ******
 
+build_dev_image: ${DOCKER_FILE_STAMP} ${STAMP}
 ${DOCKER_FILE_STAMP}: Dockerfile
 	docker build -t ${DEV_IMAGE_NAME} --target dev .
 	@touch $@
-
-build_dev_image: ${DOCKER_FILE_STAMP}
 
 remove_images:
 	docker rmi ${DEV_IMAGE_NAME}
@@ -79,11 +80,15 @@ terminal_dev:
 # ****** Release / Build ******
 
 WASM_PACK = wasm-pack
-build_dev:
+build_dev: ${BUILD_DEV_STAMP}
+${BUILD_DEV_STAMP}: ${SRC} ${STAMP}
 	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint ${WASM_PACK} ${DEV_IMAGE_NAME} build --target web
+	@touch $@
 
-build_release:
+build_release: ${BUILD_RELEASE_STAMP}
+${BUILD_RELEASE_STAMP}: ${SRC} ${STAMP}
 	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint ${WASM_PACK} ${DEV_IMAGE_NAME} build --target nodejs -d pkg-node
+	@touch $@
 
 publish_release:
 	@echo "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)" > /tmp/osmia-npm-version.txt
@@ -92,22 +97,22 @@ publish_release:
 	@git diff --quiet && git diff --cached --quiet || (echo "Error: Repository not clean" && false)
 	@echo "${REPO} is clean."
 	@echo "Building release..."
-	make build_release
-	sudo chown -R ${USER}:${USER} .
-	echo "Preparing for commit..."
-	rm -rf /tmp/osmia-npm-release
-	cp -r pkg-node /tmp/osmia-npm-release
-	echo "Committing release..."
+	@make build_release
+	@sudo chown -R ${USER}:${USER} .
+	@echo "Preparing for commit..."
+	@rm -rf /tmp/osmia-npm-release
+	@cp -r pkg-node /tmp/osmia-npm-release
+	@echo "Committing release..."
 	@git checkout stable
 	@rm -rf ./*
 	@cp -r /tmp/osmia-npm-release/* .
 	@git add .
 	@cat /tmp/osmia-npm-version.txt | git commit -F -
 	@git tag $(shell cat /tmp/osmia-npm-version.txt)
-	echo "Cleaning up..."
+	@echo "Cleaning up..."
 	@rm -rf /tmp/osmia-npm-release
 	@rm -rf /tmp/osmia-npm-version.txt
-	echo "Done! Publishing release..."
+	@echo "Done! Publishing release..."
 	@git push
 	@git push --tags
 	@git checkout main

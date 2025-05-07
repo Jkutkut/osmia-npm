@@ -1,6 +1,6 @@
 [package]
 name = "osmia-npm"
-version = "0.1.9"
+version = "0.1.10"
 authors = ["jkutkut <45950243+Jkutkut@users.noreply.github.com>"]
 description = "osmia as a wasm npm package"
 license = "GPL-3.0-or-later"
