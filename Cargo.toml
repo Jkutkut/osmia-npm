@@ -1,7 +1,14 @@
 [package]
 name = "osmia-npm"
-version = "0.1.0"
+version = "0.1.1"
+authors = ["jkutkut <45950243+Jkutkut@users.noreply.github.com>"]
+description = "osmia as a wasm npm package"
+# license = ""
+repository = "https://github.com/jkutkut/osmia-npm"
 edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
 
 [dependencies]
 wasm-bindgen = "0.2.100"

@@ -11,7 +11,7 @@ REPO = $(shell echo ${DIR} | sed 's/.*\///' | tr '[:upper:]' '[:lower:]')
 
 # ****** Rust Constants ******
 CARGO = /root/.cargo/bin/cargo
-CODE_VOLUME = -v ${DIR}:/${REPO}
+CODE_VOLUME = -v ${DIR}:/${REPO} -w /${REPO}
 CARGO_REGISTRY = -v cargo_registy:/root/.cargo/registry
 
 # ****** Docker Constants ******
@@ -19,7 +19,8 @@ DOCKER_RUN = docker run --rm
 DOCKER_RUN_IT = ${DOCKER_RUN} -it
 DOCKER_RUN_D = ${DOCKER_RUN} -d
 
-RUN_ATTRS = ${CODE_VOLUME} ${CARGO_REGISTRY} -w /${REPO}
+RUN_ATTRS = ${CODE_VOLUME} ${CARGO_REGISTRY} \
+	-e RUSTFLAGS="-C target-feature=-crt-static"
 
 terminal_installer:
 	@echo "cargo --help"
@@ -61,14 +62,15 @@ remove_images:
 	docker rmi ${RELEASE_IMAGE_NAME}
 	@#docker rmi ${LATEST_IMAGE_NAME}
 
+WASM_PACK = wasm-pack
 build_dev:
-	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint ${CARGO} ${DEV_IMAGE_NAME} build
+	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint ${WASM_PACK} ${DEV_IMAGE_NAME} build --target web
 
 connect_dev:
 	docker exec -it ${DEV_CONTAINER_NAME} sh
 
 terminal_dev:
-	${DOCKER_RUN_IT} ${DEV_ATTRS} ${DEV_IMAGE_NAME}
+	${DOCKER_RUN_IT} ${CODE_VOLUME} ${DEV_IMAGE_NAME}
 
-build_release_binary:
-	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint ${CARGO} ${DEV_IMAGE_NAME} build --release
+build_release:
+	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint ${WASM_PACK} ${DEV_IMAGE_NAME} build --target bundler

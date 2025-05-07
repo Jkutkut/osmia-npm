@@ -1,0 +1,15 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <title>osmia-npm with wasm</title>
+  </head>
+  <body>
+    <script type="module">
+      import init, { foo } from "./pkg/osmia_npm.js";
+      init().then(() => {
+        console.log(foo());
+      });
+    </script>
+  </body>
+</html>
