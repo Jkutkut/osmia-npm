@@ -38,10 +38,25 @@ LATEST_IMAGE_NAME = ${IMAGE_NAME}:latest
 DEV_CONTAINER_NAME = ${NAME}_dev
 RELEASE_CONTAINER_NAME = ${NAME}_$(VERSION)
 
+SRC = $(wildcard src/*) \
+	  Cargo.toml \
+	  Makefile \
+	  Dockerfile
+
+# ****** Makefile stampts ******
+STAMP = .stamps
+DOCKER_FILE_STAMP = ${STAMP}/Dockerfile
+
+${STAMP}:
+	@mkdir -p ${STAMP}
+
 # ****** Docker Images ******
 
-build_dev_image:
+${DOCKER_FILE_STAMP}: Dockerfile
 	docker build -t ${DEV_IMAGE_NAME} --target dev .
+	@touch $@
+
+build_dev_image: ${DOCKER_FILE_STAMP}
 
 # ****** Docker Containers ******
 stop_dev:

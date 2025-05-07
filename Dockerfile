@@ -8,13 +8,3 @@ RUN rustup target add wasm32-unknown-unknown
 RUN cargo install wasm-bindgen-cli
 
 # -----------------------------------
-FROM alpine:3.16 as release
-
-# RUN apk add --update XXXXXXXX && \
-#   rm -rf /var/cache/apk/*
-
-WORKDIR /app
-
-COPY target/release/XXXXXXXX/XXXXXXXX .
-
-ENTRYPOINT ["./XXXXXXXX"]
