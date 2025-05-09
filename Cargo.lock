@@ -36,6 +36,11 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "13dc2df351e3202783a1fe0d44375f7295ffb4049267b0f3018346dc122a1d94"
 
 [[package]]
+name = "macro_test"
+version = "1.0.0"
+source = "git+https://github.com/jkutkut/rust-macro-test#bb1a26ff6deee2c0d1894fc73f2533b7de102a22"
+
+[[package]]
 name = "memchr"
 version = "2.7.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -59,8 +64,9 @@ dependencies = [
 
 [[package]]
 name = "osmia-npm"
-version = "0.1.12"
+version = "0.2.0"
 dependencies = [
+ "macro_test",
  "osmia",
  "wasm-bindgen",
 ]
