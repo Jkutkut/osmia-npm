@@ -43,10 +43,10 @@ SRC = $(wildcard src/*) \
 	  Dockerfile
 
 test:
-	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint cargo ${DEV_IMAGE_NAME} test
+	${DOCKER_RUN_IT} --name ${DEV_CONTAINER_NAME} ${RUN_ATTRS} --entrypoint cargo ${DEV_IMAGE_NAME} test
 
 test_watch:
-	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint cargo ${DEV_IMAGE_NAME} watch --clear test
+	${DOCKER_RUN_IT} --name ${DEV_CONTAINER_NAME} ${RUN_ATTRS} --entrypoint cargo ${DEV_IMAGE_NAME} watch --clear test
 
 # ****** Makefile stampts ******
 STAMP = .stamps
