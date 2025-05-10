@@ -12,6 +12,17 @@ body, #root {
     padding: 10px;
 }
 
+.header {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    img {
+        height: 30px;
+        filter: invert(100%);
+        align-self: center;
+    }
+}
+
 .row {
     display: flex;
     flex-direction: row;
