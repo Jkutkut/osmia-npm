@@ -54,8 +54,8 @@ checksum = "42f5e15c9953c5e4ccceeb2e7382a716482c34515315f7b03532b8b4e8393d2d"
 
 [[package]]
 name = "osmia"
-version = "2.9.0"
-source = "git+https://github.com/jkutkut/osmia#5927a099a16aa13f341f5bc8171d0b6cf431761c"
+version = "2.10.0"
+source = "git+https://github.com/jkutkut/osmia#bba126b74e57e0109e22bd82e92f75d23c485ec4"
 dependencies = [
  "regex",
  "serde",
@@ -64,7 +64,7 @@ dependencies = [
 
 [[package]]
 name = "osmia-npm"
-version = "0.2.2"
+version = "0.2.3"
 dependencies = [
  "macro_test",
  "osmia",
