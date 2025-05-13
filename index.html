@@ -14,8 +14,14 @@
                 <h1>osmia-npm with wasm</h1>
             </div>
             <div class="row">
-                <input type="checkbox" id="chkCtx" checked/>
-                <label for="chkCtx">Context</label>
+                <div>
+                    <input type="checkbox" id="chkCtx" checked/>
+                    <label for="chkCtx">Context</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="chkLiveCtx"/>
+                    <label for="chkCtx">See context</label>
+                </div>
             </div>
             <div class="row">
                 <textarea id="code"
@@ -28,8 +34,14 @@
                 ></textarea>
             </div>
             <button id="run">Run</button>
-            <pre id="output"></pre>
-            <pre id="ctxOutput"></pre>
+            <div id="outputContainer" class="hide">
+                <pre><b>Output</b></pre>
+                <pre id="output"></pre>
+            </div>
+            <div id="outputCtxContainer" class="hide">
+                <pre><b>Context</b></pre>
+                <pre id="ctxOutput"></pre>
+            </div>
         </div>
     </body>
 </html>

@@ -64,7 +64,7 @@ dependencies = [
 
 [[package]]
 name = "osmia-npm"
-version = "0.3.0"
+version = "0.3.1"
 dependencies = [
  "macro_test",
  "osmia",

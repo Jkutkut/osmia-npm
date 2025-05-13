@@ -10,11 +10,23 @@ const CTX = `{
 }`.trim();
 
 document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("code").value = CODE;
-  document.getElementById("ctx").value = CTX;
+  const codeContainer = document.getElementById("code");
+  const ctxContainer = document.getElementById("ctx");
+  const chkLiveCtx = document.getElementById("chkLiveCtx");
+  const ctxOutput = document.getElementById("ctxOutput");
+  const outputCtxContainer = document.getElementById("outputCtxContainer");
+
+  codeContainer.value = CODE;
+  ctxContainer.value = CTX;
+  ctxOutput.innerHTML = "Update the context to update";
 
   chkCtx.addEventListener("change", () => {
       ctxContainer.classList.toggle("hide", !chkCtx.checked);
+  });
+
+  chkLiveCtx.addEventListener("change", () => {
+    const isChecked = chkLiveCtx.checked;
+    outputCtxContainer.classList.toggle("hide", !isChecked);
   });
 });
 
@@ -62,7 +74,7 @@ const convert_dump = (node, options) => {
     result = `(${args}) => ...`;
   }
   return result;
-}
+};
 
 import('/pkg/osmia_npm.js').then(async (osmia) => {
   await osmia.default();
@@ -74,8 +86,11 @@ import('/pkg/osmia_npm.js').then(async (osmia) => {
   const btn = document.getElementById("run");
   const chkCtx = document.getElementById("chkCtx");
   const ctxOutput = document.getElementById("ctxOutput");
+  const outputContainer = document.getElementById("outputContainer");
+  const outputCtxContainer = document.getElementById("outputCtxContainer");
 
   const runCode = () => {
+    outputContainer.classList.remove("hide");
     const code = codeContainer.value;
     let result;
     try {
@@ -94,6 +109,9 @@ import('/pkg/osmia_npm.js').then(async (osmia) => {
     resultContainer.innerHTML = result;
   };
   const updateCurrentCtx = () => {
+    if (outputCtxContainer.classList.contains("hide")) {
+      return;
+    }
     try {
       const dump = osmia.ctx_json_dump(ctxContainer.value);
       const formatted = format_ctx_json_dump(JSON.parse(dump));
