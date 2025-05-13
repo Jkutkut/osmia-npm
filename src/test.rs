@@ -39,3 +39,19 @@ macro_tests!(
 	(fail_code01, "{{if }}"),
 	(fail_code02, "{{if true}}foo")
 );
+
+#[test]
+fn ctx_json_dump() {
+	assert!(crate::ctx_json_dump(None).is_ok());
+}
+
+#[test]
+fn ctx_json_dump_with_ctx() {
+	let ctx = r#"{"usr":{"name":"Marvin"}}"#;
+	let dump = crate::ctx_json_dump(Some(ctx.to_string()));
+	assert!(dump.is_ok());
+	let dump = dump.unwrap();
+	println!("{}", dump);
+	assert!(dump.contains(r#""usr":{"#));
+	assert!(dump.contains(r#""value":"Marvin""#));
+}

@@ -16,7 +16,53 @@ document.addEventListener("DOMContentLoaded", () => {
   chkCtx.addEventListener("change", () => {
       ctxContainer.classList.toggle("hide", !chkCtx.checked);
   });
-})
+});
+
+const OFFSET = "  ";
+const format_ctx_json_dump = (node) => {
+  return convert_dump(node, {offset: "", inMethod: false});
+};
+
+const convert_dump = (node, options) => {
+  let result = "";
+  const {offset} = options;
+  options = {...options, offset: offset + OFFSET};
+  if (node.type == "object") {
+    result += "{\n";
+    const entries = Object.entries(node.value);
+    entries.sort((a, b) => a < b ? -1 : 1);
+    result += entries.map(([key, value]) => {
+      if (key == "_method") {
+        const methodOptions = {...options, inMethod: true};
+        return `${offset + OFFSET}${key}: ${convert_dump(value, methodOptions)}`;
+      }
+      return `${offset + OFFSET}${key}: ${convert_dump(value, options)}`;
+    }).join(",\n");
+    result += "\n" + offset + "}";
+  }
+  else if (node.type == "array") {
+    result += "[\n";
+    result += node.elements.map((value) => {
+      return `${offset}${convert_dump(value, options)}`;
+    }).join(",\n");
+    result += "\n" + offset + "]";
+  }
+  else if (node.type == "variable") {
+    result = node.value;
+  }
+  else if (node.type == "function") {
+    let args;
+    if (node.arity) {
+      const arity = options.inMethod ? node.arity - 1 : node.arity;
+      args = Array(arity).fill("arg").map((e, idx) => e + idx).join(", ");
+    }
+    else {
+      args = "...args";
+    }
+    result = `(${args}) => ...`;
+  }
+  return result;
+}
 
 import('/pkg/osmia_npm.js').then(async (osmia) => {
   await osmia.default();
@@ -27,6 +73,7 @@ import('/pkg/osmia_npm.js').then(async (osmia) => {
   const resultContainer = document.getElementById("output");
   const btn = document.getElementById("run");
   const chkCtx = document.getElementById("chkCtx");
+  const ctxOutput = document.getElementById("ctxOutput");
 
   const runCode = () => {
     const code = codeContainer.value;
@@ -46,9 +93,23 @@ import('/pkg/osmia_npm.js').then(async (osmia) => {
     ],["variable", "value"]);
     resultContainer.innerHTML = result;
   };
+  const updateCurrentCtx = () => {
+    try {
+      const dump = osmia.ctx_json_dump(ctxContainer.value);
+      const formatted = format_ctx_json_dump(JSON.parse(dump));
+      ctxOutput.innerHTML = formatted;
+    }
+    catch (e) {
+      console.error(e);
+      ctxOutput.innerHTML = "Invalid JSON context";
+    }
+  };
+
   btn.addEventListener("click", runCode);
+  ctxContainer.addEventListener("input", updateCurrentCtx);
+  updateCurrentCtx();
 }).catch(() => {
-    const errorMsg = "Error loading wasm. Did you build?";
-    console.error(errorMsg);
-    document.getElementById("output").innerHTML = errorMsg;
+  const errorMsg = "Error loading wasm. Did you build?";
+  console.error(errorMsg);
+  document.getElementById("output").innerHTML = errorMsg;
 });
