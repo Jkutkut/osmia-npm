@@ -38,3 +38,8 @@ fn ctx2osmia(ctx: Option<String>) -> Result<Osmia, String> {
 pub fn ctx_json_dump(ctx: Option<String>) -> Result<String, String> {
 	Ok(ctx2osmia(ctx)?.ctx_json_dump())
 }
+
+#[wasm_bindgen]
+pub fn ctx_json_dump_variable(var: &str, ctx: Option<String>) -> Result<String, String> {
+	ctx2osmia(ctx)?.ctx_json_dump_variable(var)
+}
