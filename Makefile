@@ -108,7 +108,7 @@ publish_release:
 	@cp -r /tmp/osmia-npm-release/* .
 	@git add .
 	@cat /tmp/osmia-npm-version.txt | git commit -F -
-	git tag "$(shell cat /tmp/osmia-npm-version.txt)"
+	@xargs -n 1 git tag < /tmp/osmia-npm-version.txt
 	@echo "Cleaning up..."
 	@rm -rf /tmp/osmia-npm-release
 	@rm -rf /tmp/osmia-npm-version.txt
