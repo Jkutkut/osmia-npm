@@ -71,7 +71,7 @@ const convert_dump = (node, options) => {
     else {
       args = "...args";
     }
-    result = `(${args}) => ...`;
+    result = `(${args}) => ${node.description}`;
   }
   return result;
 };
