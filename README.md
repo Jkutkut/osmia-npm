@@ -24,6 +24,8 @@ Note: You can compile the project directly with the use of the Makefile.
 
 ### As a web module - pkg module:
 
+Live example: [osmia-npm pkg module example](https://jkutkut.github.io/osmia-npm/)
+
 ```js
 import('/pkg/osmia_npm.js').then(async (osmia) => {
     // TODO use osmia-npm API here
