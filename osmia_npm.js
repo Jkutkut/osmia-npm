@@ -84,6 +84,13 @@ function takeFromExternrefTable0(idx) {
     return value;
 }
 /**
+ * Run Osmia code with the default context
+ *
+ * # Arguments
+ * * `code` - The Osmia code to run as a string
+ *
+ * # Returns
+ * * `Result<String, String>` - The result of the Osmia code, or an error message
  * @param {string} code
  * @returns {string}
  */
@@ -109,6 +116,14 @@ module.exports.run = function(code) {
 };
 
 /**
+ * Run Osmia code with a custom context
+ *
+ * # Arguments
+ * * `ctx` - The Osmia context as a string
+ * * `code` - The Osmia code to run as a string
+ *
+ * # Returns
+ * * `Result<String, String>` - The result of the Osmia code, or an error message
  * @param {string} ctx
  * @param {string} code
  * @returns {string}
@@ -140,6 +155,13 @@ function isLikeNone(x) {
     return x === undefined || x === null;
 }
 /**
+ * Get the Osmia context, based on a given initial context.
+ *
+ * # Arguments
+ * * `ctx` - The initial context as a string
+ *
+ * # Returns
+ * * `Result<String, String>` - The Osmia context as a string, or an error message
  * @param {string | null} [ctx]
  * @returns {string}
  */
@@ -165,6 +187,14 @@ module.exports.ctx_json_dump = function(ctx) {
 };
 
 /**
+ * Get a variable from the Osmia context, based on a given initial context.
+ *
+ * # Arguments
+ * * `var` - The name of the variable to get
+ * * `ctx` - The initial context as a string
+ *
+ * # Returns
+ * * `Result<String, String>` - The value of the variable, or an error message
  * @param {string} _var
  * @param {string | null} [ctx]
  * @returns {string}
