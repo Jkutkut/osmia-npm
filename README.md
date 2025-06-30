@@ -31,3 +31,9 @@ import('/pkg/osmia_npm.js').then(async (osmia) => {
 ```
 
 Note: You have a small demo if you: Compile the pkg module with `make build_dev` and preview the [index.html](./index.html) file.
+
+## Docs:
+
+Compile the docs directly with `make doc` and preview the `./target/doc/osmia_npm/index.html` file.
+
+You may view it directly [on this branch](https://github.com/Jkutkut/osmia-npm/tree/documentation), opening the file `./osmia_npm/index.html`.
