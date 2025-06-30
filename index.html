@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8" />
+        <title>osmia-npm with wasm</title>
+        <link rel="stylesheet" href="res/index.css">
+        <link rel="icon" href="https://raw.githubusercontent.com/Jkutkut/osmia/refs/heads/main/res/logo.svg" type="image/png">
+        <script type="module" src="res/index.js"></script>
+    </head>
+    <body>
+        <div id="root">
+            <div class="header">
+                <img src="https://raw.githubusercontent.com/Jkutkut/osmia/refs/heads/main/res/logo.svg" />
+                <h1>osmia-npm with wasm</h1>
+            </div>
+            <div class="row">
+                <div>
+                    <input type="checkbox" id="chkCtx" checked/>
+                    <label for="chkCtx">Context</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="chkLiveCtx"/>
+                    <label for="chkCtx">See context</label>
+                </div>
+            </div>
+            <div class="row">
+                <textarea id="code"
+                    type="text"
+                    placeholder="Enter code" rows="25"
+                ></textarea>
+                <textarea id="ctx"
+                    type="text" class=""
+                    placeholder="Enter ctx as json" rows="25"
+                ></textarea>
+            </div>
+            <button id="run">Run</button>
+            <div id="outputContainer" class="hide">
+                <pre><b>Output</b></pre>
+                <pre id="output"></pre>
+            </div>
+            <div id="outputCtxContainer" class="hide">
+                <pre><b>Context</b></pre>
+                <pre id="ctxOutput"></pre>
+            </div>
+        </div>
+    </body>
+</html>
