@@ -1,0 +1,1 @@
+window.SIDEBAR_ITEMS = {"macro":["impl_debug"],"struct":["Osmia"],"trait":["CodeInterpreter"]};

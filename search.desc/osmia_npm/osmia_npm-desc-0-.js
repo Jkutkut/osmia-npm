@@ -1,0 +1,1 @@
+searchState.loadedDescShard("osmia_npm", 0, "Get the Osmia context, based on a given initial context.\nGet a variable from the Osmia context, based on a given …\nRun Osmia code with the default context\nRun Osmia code with a custom context")

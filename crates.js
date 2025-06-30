@@ -1,0 +1,2 @@
+window.ALL_CRATES = ["aho_corasick","bumpalo","cfg_if","itoa","log","memchr","once_cell","osmia","osmia_npm","proc_macro2","quote","regex","regex_automata","regex_syntax","rustversion","ryu","serde","serde_derive","serde_json","syn","unicode_ident","wasm_bindgen","wasm_bindgen_backend","wasm_bindgen_macro","wasm_bindgen_macro_support","wasm_bindgen_shared"];
+//{"start":21,"fragment_lengths":[14,10,9,7,6,9,12,8,12,14,8,8,17,15,14,6,8,15,13,6,16,15,23,21,29,22]}

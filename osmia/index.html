@@ -1,0 +1,67 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="osmia"><title>osmia - Rust</title><script>if(window.location.protocol!=="file:")document.head.insertAdjacentHTML("beforeend","SourceSerif4-Regular-6b053e98.ttf.woff2,FiraSans-Italic-81dc35de.woff2,FiraSans-Regular-0fe48ade.woff2,FiraSans-MediumItalic-ccf7e434.woff2,FiraSans-Medium-e1aa3f0a.woff2,SourceCodePro-Regular-8badfe75.ttf.woff2,SourceCodePro-Semibold-aa29a496.ttf.woff2".split(",").map(f=>`<link rel="preload" as="font" type="font/woff2" crossorigin href="../static.files/${f}">`).join(""))</script><link rel="stylesheet" href="../static.files/normalize-9960930a.css"><link rel="stylesheet" href="../static.files/rustdoc-6c3ea77c.css"><meta name="rustdoc-vars" data-root-path="../" data-static-root-path="../static.files/" data-current-crate="osmia" data-themes="" data-resource-suffix="" data-rustdoc-version="1.86.0 (05f9846f8 2025-03-31)" data-channel="1.86.0" data-search-js="search-581efc7a.js" data-settings-js="settings-6dad6058.js" ><script src="../static.files/storage-3a5871a4.js"></script><script defer src="../crates.js"></script><script defer src="../static.files/main-4d63596a.js"></script><noscript><link rel="stylesheet" href="../static.files/noscript-893ab5e7.css"></noscript><link rel="alternate icon" type="image/png" href="../static.files/favicon-32x32-6580c154.png"><link rel="icon" type="image/svg+xml" href="../static.files/favicon-044be391.svg"></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="mobile-topbar"><button class="sidebar-menu-toggle" title="show sidebar"></button><a class="logo-container" href="../osmia/index.html"><img src="https://raw.githubusercontent.com/Jkutkut/osmia/refs/heads/main/res/logo.svg" alt=""></a></nav><nav class="sidebar"><div class="sidebar-crate"><a class="logo-container" href="../osmia/index.html"><img src="https://raw.githubusercontent.com/Jkutkut/osmia/refs/heads/main/res/logo.svg" alt="logo"></a><h2><a href="../osmia/index.html">osmia</a><span class="version">2.11.3</span></h2></div><div class="sidebar-elems"><ul class="block"><li><a id="all-types" href="all.html">All Items</a></li></ul><section id="rustdoc-toc"><h3><a href="#">Sections</a></h3><ul class="block top-toc"><li><a href="#osmia" title="osmia">osmia</a><ul><li><a href="#documentation--docs" title="Documentation / Docs:">Documentation / Docs:</a></li><li><a href="#what-is-osmia" title="What is osmia?">What is osmia?</a></li><li><a href="#use-cases" title="Use Cases">Use Cases</a></li><li><a href="#special-thanks" title="Special thanks:">Special thanks:</a></li></ul></li><li><a href="#structure" title="Structure:">Structure:</a><ul><li><a href="#context" title="Context">Context</a></li><li><a href="#examples" title="Examples">Examples</a></li></ul></li></ul><h3><a href="#macros">Crate Items</a></h3><ul class="block"><li><a href="#macros" title="Macros">Macros</a></li><li><a href="#structs" title="Structs">Structs</a></li><li><a href="#traits" title="Traits">Traits</a></li></ul></section><div id="rustdoc-modnav"></div></div></nav><div class="sidebar-resizer"></div><main><div class="width-limiter"><rustdoc-search></rustdoc-search><section id="main-content" class="content"><div class="main-heading"><h1>Crate <span>osmia</span><button id="copy-path" title="Copy item path to clipboard">Copy item path</button></h1><rustdoc-toolbar></rustdoc-toolbar><span class="sub-heading"><a class="src" href="../src/osmia/lib.rs.html#1-161">Source</a> </span></div><details class="toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="osmia"><a class="doc-anchor" href="#osmia">§</a>osmia</h2>
+<p>osmia is a clean, expressive templating language rust library designed for
+building dynamic content in any programming language. Whether you’re
+generating HTML, SQL, JSON, Java, or configuration files - osmia helps you
+write templates that are readable, maintainable, and decoupled from your
+application logic.</p>
+<h3 id="documentation--docs"><a class="doc-anchor" href="#documentation--docs">§</a>Documentation / Docs:</h3>
+<p><a href="https://jkutkut.github.io/osmia/osmia/index.html">Official Documentation</a>
+<a href="https://github.com/jkutkut/osmia">Repository</a></p>
+<h3 id="what-is-osmia"><a class="doc-anchor" href="#what-is-osmia">§</a>What is osmia?</h3>
+<p>osmia is a template interpreter — a small, fast engine that reads template files
+containing dynamic expressions, control flow, and text content, then renders
+them into plain text output based on the given data.</p>
+<p>What sets osmia apart is its language independence. It isn’t tied to any
+particular language ecosystem. You can embed osmia templates in any
+project, whether you’re working in Java, Python, C#, Rust, Go, or any other
+language. This makes it perfect for projects that need flexible template
+generation without being locked into a specific tech stack.</p>
+<div><table><thead><tr><th>Project</th><th>Description</th></tr></thead><tbody>
+<tr><td><a href="https://github.com/jkutkut/osmia-vscode">osmia-vscode</a></td><td>Extension for VSCode</td></tr>
+<tr><td><a href="https://github.com/jkutkut/osmia-cli">osmia-cli</a></td><td>CLI tool</td></tr>
+<tr><td><a href="https://github.com/jkutkut/docker4osmia">docker4osmia</a></td><td>Docker image with osmia-cli</td></tr>
+</tbody></table>
+</div><h3 id="use-cases"><a class="doc-anchor" href="#use-cases">§</a>Use Cases</h3>
+<ul>
+<li>HTML templating in web projects.</li>
+<li>Formatting JSON from an API response.</li>
+<li>Code generation for boilerplate in any language.</li>
+<li>Configuration generation for CI/CD, Kubernetes, etc.</li>
+<li>Documentation templates with embedded dynamic data.</li>
+<li>Scripting and scaffolding tools.
+If you need to render structured files from templates — osmia fits right in.</li>
+</ul>
+<h3 id="special-thanks"><a class="doc-anchor" href="#special-thanks">§</a>Special thanks:</h3>
+<p>This code was inspired from <a href="https://craftinginterpreters.com/">Crafting Interpreters</a>, by Robert Nystrom.</p>
+<h2 id="structure"><a class="doc-anchor" href="#structure">§</a>Structure:</h2>
+<ul>
+<li><a href="./types/type.ParserCode.html">parsing structure</a></li>
+<li>Expressions: the smallest building block of the language.
+<a href="./model/expr/expr/enum.Expr.html">documentation</a>
+<ul>
+<li><a href="./stdlib/methods/fn.module.html">methods</a></li>
+</ul>
+</li>
+<li>Statements: piece of code that can be executed.
+<a href="./model/stmt/stmt/enum.Stmt.html">documentation</a></li>
+</ul>
+<h3 id="context"><a class="doc-anchor" href="#context">§</a>Context</h3>
+<p>The context allows to read and write variables in a Json-like syntax.</p>
+<p>Variables, functions and expressions can be stored in the context. The methods for the
+<a href="./#expressions">Expressions</a> are also stored here.
+See <a href="./stdlib/methods/fn.module.html">methods in stdlib</a></p>
+<p>The <a href="./stdlib/fn.import.html">stdlib</a> adds the base for Osmia.</p>
+<h3 id="examples"><a class="doc-anchor" href="#examples">§</a>Examples</h3>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>osmia::Osmia;
+
+<span class="kw">let </span><span class="kw-2">mut </span>osmia = Osmia::default();
+<span class="kw">let </span>output = osmia.run_code(<span class="string">"1 + 1 = {{ 1 + 1 }}"</span>).unwrap();
+<span class="macro">assert_eq!</span>(output, <span class="string">"1 + 1 = 2"</span>.to_string());</code></pre></div>
+<h4 id="json-context"><a class="doc-anchor" href="#json-context">§</a>Json context:</h4>
+<div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use </span>osmia::Osmia;
+
+<span class="kw">let </span><span class="kw-2">mut </span>osmia = Osmia::try_from(<span class="string">r#"{ "name": "Marvin" }"#</span>).unwrap();
+<span class="kw">let </span>output = osmia.run_code(<span class="string">"Hello {{ name }}!"</span>).unwrap();
+<span class="macro">assert_eq!</span>(output, <span class="string">"Hello Marvin!"</span>.to_string());</code></pre></div>
+</div></details><h2 id="macros" class="section-header">Macros<a href="#macros" class="anchor">§</a></h2><dl class="item-table"><dt><a class="macro" href="macro.impl_debug.html" title="macro osmia::impl_debug">impl_<wbr>debug</a></dt><dd>Macro that allows to generate easily a custom Debug implementation
+for an enum.</dd></dl><h2 id="structs" class="section-header">Structs<a href="#structs" class="anchor">§</a></h2><dl class="item-table"><dt><a class="struct" href="struct.Osmia.html" title="struct osmia::Osmia">Osmia</a></dt><dd>Default osmia template engine API.</dd></dl><h2 id="traits" class="section-header">Traits<a href="#traits" class="anchor">§</a></h2><dl class="item-table"><dt><a class="trait" href="trait.CodeInterpreter.html" title="trait osmia::CodeInterpreter">Code<wbr>Interpreter</a></dt></dl></section></div></main></body></html>

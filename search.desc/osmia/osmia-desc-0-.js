@@ -1,0 +1,1 @@
+searchState.loadedDescShard("osmia", 0, "osmia\nDefault osmia template engine API.\nReturns the argument unchanged.\nMacro that allows to generate easily a custom Debug …\nCalls <code>U::from(self)</code>.")
