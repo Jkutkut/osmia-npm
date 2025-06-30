@@ -120,6 +120,36 @@ publish_release:
 	@git push --tags
 	@git checkout main
 
+publish_web_demo:
+	@echo "Ensuring repo has no uncommited changes..."
+	@git diff --quiet && git diff --cached --quiet || (echo "Error: Repository not clean" && false)
+	@echo "${REPO} is clean."
+	@echo "Building web demo..."
+	make build_dev
+	@sudo chown -R ${USER}:${USER} .
+	@rm -rf /tmp/osmia-npm-web
+	@mkdir /tmp/osmia-npm-web
+	@cp index.html /tmp/osmia-npm-web
+	@cp -r res /tmp/osmia-npm-web/res
+	@cp -r pkg /tmp/osmia-npm-web/pkg
+	echo "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)" > /tmp/osmia-npm-version.txt
+	@echo "Committing web demo..."
+	git checkout web
+	@rm -rf ./* ./.stamps
+	cp -r /tmp/osmia-npm-web/* .
+	git add .
+	git add -f pkg/osmia_npm.js
+	git add -f pkg/osmia_npm.d.ts
+	git add -f pkg/osmia_npm_bg.wasm
+	git add -f pkg/osmia_npm_bg.wasm.d.ts
+	@cat /tmp/osmia-npm-version.txt | git commit -F -
+	@echo "Cleaning up..."
+	rm -rf /tmp/osmia-npm-web
+	rm -rf /tmp/osmia-npm-version.txt
+	@echo "Done! Publishing web demo..."
+	@git push
+	@git checkout main
+
 doc_release:
 	@echo "Ensuring repo has no uncommited changes..."
 	@git diff --quiet && git diff --cached --quiet || (echo "Error: Repository not clean" && false)
