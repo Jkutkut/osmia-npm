@@ -76,7 +76,7 @@ const convert_dump = (node, options) => {
   return result;
 };
 
-import('/pkg/osmia_npm.js').then(async (osmia) => {
+import('../pkg/osmia_npm.js').then(async (osmia) => {
   await osmia.default();
   return osmia;
 }).then((osmia) => {
