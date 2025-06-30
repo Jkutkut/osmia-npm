@@ -79,6 +79,9 @@ terminal_dev:
 
 # ****** Release / Build ******
 
+doc:
+	${DOCKER_RUN_IT} ${RUN_ATTRS} --entrypoint cargo ${DEV_IMAGE_NAME} doc --lib --examples
+
 WASM_PACK = wasm-pack
 build_dev: ${BUILD_DEV_STAMP}
 ${BUILD_DEV_STAMP}: ${SRC} ${STAMP}
@@ -115,6 +118,30 @@ publish_release:
 	@echo "Done! Publishing release..."
 	@git push
 	@git push --tags
+	@git checkout main
+
+doc_release:
+	@echo "Ensuring repo has no uncommited changes..."
+	@git diff --quiet && git diff --cached --quiet || (echo "Error: Repository not clean" && false)
+	@echo "${REPO} is clean."
+	@echo "Generating docs..."
+	make doc
+	sudo chown -R ${USER}:${USER} target
+	@echo "Preparing for commit..."
+	rm -rf /tmp/osmia-npm-doc
+	cp -r target/doc /tmp/osmia-npm-doc
+	echo "v$(shell grep -m 1 version Cargo.toml | cut -d '"' -f 2)" > /tmp/osmia-npm-version.txt
+	@echo "Committing docs..."
+	git checkout documentation
+	rm -rf ./*
+	cp -r /tmp/osmia-npm-doc/* .
+	git add .
+	cat /tmp/osmia-npm-version.txt | git commit -F -
+	@echo "Cleaning up..."
+	rm -rf /tmp/osmia-npm-doc
+	rm -rf /tmp/osmia-npm-version.txt
+	@echo "Done! Publishing docs..."
+	@git push
 	@git checkout main
 
 clean:
