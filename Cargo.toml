@@ -1,6 +1,6 @@
 [package]
 name = "osmia-npm"
-version = "0.5.0"
+version = "0.5.1"
 authors = ["jkutkut <45950243+Jkutkut@users.noreply.github.com>"]
 description = "osmia as a wasm npm package"
 license = "GPL-3.0-or-later"
@@ -15,4 +15,4 @@ osmia = { git = "https://github.com/jkutkut/osmia", features = [ "dumper", "deta
 wasm-bindgen = "0.2.100"
 
 [dev-dependencies]
-macro_test = { git = "https://github.com/jkutkut/rust-macro-test" }
+macro_test = { git = "https://github.com/jkutkut/rust-macro-test", tag = "v1.3.0" }
