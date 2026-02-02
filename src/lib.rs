@@ -30,14 +30,40 @@ pub fn run(code: &str) -> Result<String, String> {
 /// Run Osmia code with a custom context
 ///
 /// # Arguments
-/// * `ctx` - The Osmia context as a string
+/// * `ctx` - The Osmia context as a string (JSON)
 /// * `code` - The Osmia code to run as a string
 ///
 /// # Returns
 /// * `Result<String, String>` - The result of the Osmia code, or an error message
 #[wasm_bindgen]
 pub fn run_ctx(ctx: &str, code: &str) -> Result<String, String> {
-	run_osmia(Osmia::try_from(ctx)?, &code)
+	run_json_ctx(ctx, code)
+}
+
+/// Run Osmia code with a custom JSON context
+///
+/// # Arguments
+/// * `ctx` - The Osmia context as a string (JSON)
+/// * `code` - The Osmia code to run as a string
+///
+/// # Returns
+/// * `Result<String, String>` - The result of the Osmia code, or an error message
+#[wasm_bindgen]
+pub fn run_json_ctx(ctx: &str, code: &str) -> Result<String, String> {
+	run_osmia(Osmia::try_from_json(ctx)?, &code)
+}
+
+/// Run Osmia code with a custom YAML context
+///
+/// # Arguments
+/// * `ctx` - The Osmia context as a string (YAML)
+/// * `code` - The Osmia code to run as a string
+///
+/// # Returns
+/// * `Result<String, String>` - The result of the Osmia code, or an error message
+#[wasm_bindgen]
+pub fn run_yaml_ctx(ctx: &str, code: &str) -> Result<String, String> {
+	run_osmia(Osmia::try_from_yaml(ctx)?, &code)
 }
 
 fn ctx2osmia(ctx: Option<String>) -> Result<Osmia, String> {

@@ -1,5 +1,5 @@
 use osmia::{Osmia, CodeInterpreter};
-use crate::{run, run_ctx, VERSION};
+use crate::{run, run_ctx, run_json_ctx, run_yaml_ctx, VERSION};
 use macro_test::macro_tests;
 
 fn rok_eq(code: &str, expected: &str) {
@@ -12,6 +12,16 @@ fn rok_eq(code: &str, expected: &str) {
 fn rctx_eq(json: &str, code: &str, expected: &str) {
 	println!("Running code (should be ok):\n{}\ncontext:\n{}\nexpected:\n{}", code, json, expected);
 	let r = run_ctx(json, code);
+	assert!(r.is_ok());
+	assert_eq!(r.unwrap(), expected);
+	let r = run_json_ctx(json, code);
+	assert!(r.is_ok());
+	assert_eq!(r.unwrap(), expected);
+}
+
+fn rctx_yaml_eq(yaml: &str, code: &str, expected: &str) {
+	println!("Running code (should be ok):\n{}\ncontext:\n{}\nexpected:\n{}", code, yaml, expected);
+	let r = run_yaml_ctx(yaml, code);
 	assert!(r.is_ok());
 	assert_eq!(r.unwrap(), expected);
 }
@@ -31,6 +41,11 @@ macro_tests!(
 macro_tests!(
 	rctx_eq,
 	(json, r#"{"usr":{"name":"Marvin"}}"#, "{{usr.name}}", "Marvin")
+);
+
+macro_tests!(
+	rctx_yaml_eq,
+	(yaml, "usr:\n  name: Marvin", "{{usr.name}}", "Marvin")
 );
 
 macro_tests!(
