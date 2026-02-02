@@ -4,10 +4,10 @@
  * Get the Osmia context, based on a given initial context.
  *
  * # Arguments
- * * `ctx` - The initial context as a string
+ * * `ctx` - The initial context as a string with JSON format
  *
  * # Returns
- * * `Result<String, String>` - The Osmia context as a string, or an error message
+ * * `Result<String, String>` - The Osmia context as a string in JSON format, or an error message
  * @param {string | null} [ctx]
  * @returns {string}
  */
@@ -38,10 +38,10 @@ exports.ctx_json_dump = ctx_json_dump;
  *
  * # Arguments
  * * `var` - The name of the variable to get
- * * `ctx` - The initial context as a string
+ * * `ctx` - The initial context as a string with JSON format
  *
  * # Returns
- * * `Result<String, String>` - The value of the variable, or an error message
+ * * `Result<String, String>` - The value of the variable in JSON format, or an error message
  * @param {string} _var
  * @param {string | null} [ctx]
  * @returns {string}
@@ -69,6 +69,76 @@ function ctx_json_dump_variable(_var, ctx) {
     }
 }
 exports.ctx_json_dump_variable = ctx_json_dump_variable;
+
+/**
+ * Get the Osmia context, based on a given initial context.
+ *
+ * # Arguments
+ * * `ctx` - The initial context as a string with YAML format
+ *
+ * # Returns
+ * * `Result<String, String>` - The Osmia context as a string in JSON format, or an error message
+ * @param {string | null} [ctx]
+ * @returns {string}
+ */
+function ctx_yaml_dump(ctx) {
+    let deferred3_0;
+    let deferred3_1;
+    try {
+        var ptr0 = isLikeNone(ctx) ? 0 : passStringToWasm0(ctx, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        var len0 = WASM_VECTOR_LEN;
+        const ret = wasm.ctx_yaml_dump(ptr0, len0);
+        var ptr2 = ret[0];
+        var len2 = ret[1];
+        if (ret[3]) {
+            ptr2 = 0; len2 = 0;
+            throw takeFromExternrefTable0(ret[2]);
+        }
+        deferred3_0 = ptr2;
+        deferred3_1 = len2;
+        return getStringFromWasm0(ptr2, len2);
+    } finally {
+        wasm.__wbindgen_free(deferred3_0, deferred3_1, 1);
+    }
+}
+exports.ctx_yaml_dump = ctx_yaml_dump;
+
+/**
+ * Get a variable from the Osmia context, based on a given initial context.
+ *
+ * # Arguments
+ * * `var` - The name of the variable to get
+ * * `ctx` - The initial context as a string with YAML format
+ *
+ * # Returns
+ * * `Result<String, String>` - The value of the variable in JSON format, or an error message
+ * @param {string} _var
+ * @param {string | null} [ctx]
+ * @returns {string}
+ */
+function ctx_yaml_dump_variable(_var, ctx) {
+    let deferred4_0;
+    let deferred4_1;
+    try {
+        const ptr0 = passStringToWasm0(_var, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        var ptr1 = isLikeNone(ctx) ? 0 : passStringToWasm0(ctx, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        var len1 = WASM_VECTOR_LEN;
+        const ret = wasm.ctx_yaml_dump_variable(ptr0, len0, ptr1, len1);
+        var ptr3 = ret[0];
+        var len3 = ret[1];
+        if (ret[3]) {
+            ptr3 = 0; len3 = 0;
+            throw takeFromExternrefTable0(ret[2]);
+        }
+        deferred4_0 = ptr3;
+        deferred4_1 = len3;
+        return getStringFromWasm0(ptr3, len3);
+    } finally {
+        wasm.__wbindgen_free(deferred4_0, deferred4_1, 1);
+    }
+}
+exports.ctx_yaml_dump_variable = ctx_yaml_dump_variable;
 
 /**
  * Run Osmia code with the default context
