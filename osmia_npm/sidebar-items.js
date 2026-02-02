@@ -1,1 +1,1 @@
-window.SIDEBAR_ITEMS = {"fn":["ctx_json_dump","ctx_json_dump_variable","run","run_ctx"]};
+window.SIDEBAR_ITEMS = {"fn":["ctx_json_dump","ctx_json_dump_variable","ctx_yaml_dump","ctx_yaml_dump_variable","run","run_ctx","run_json_ctx","run_yaml_ctx"]};
