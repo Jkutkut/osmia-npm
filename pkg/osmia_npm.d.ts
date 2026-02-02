@@ -5,10 +5,10 @@
  * Get the Osmia context, based on a given initial context.
  *
  * # Arguments
- * * `ctx` - The initial context as a string
+ * * `ctx` - The initial context as a string with JSON format
  *
  * # Returns
- * * `Result<String, String>` - The Osmia context as a string, or an error message
+ * * `Result<String, String>` - The Osmia context as a string in JSON format, or an error message
  */
 export function ctx_json_dump(ctx?: string | null): string;
 
@@ -17,12 +17,35 @@ export function ctx_json_dump(ctx?: string | null): string;
  *
  * # Arguments
  * * `var` - The name of the variable to get
- * * `ctx` - The initial context as a string
+ * * `ctx` - The initial context as a string with JSON format
  *
  * # Returns
- * * `Result<String, String>` - The value of the variable, or an error message
+ * * `Result<String, String>` - The value of the variable in JSON format, or an error message
  */
 export function ctx_json_dump_variable(_var: string, ctx?: string | null): string;
+
+/**
+ * Get the Osmia context, based on a given initial context.
+ *
+ * # Arguments
+ * * `ctx` - The initial context as a string with YAML format
+ *
+ * # Returns
+ * * `Result<String, String>` - The Osmia context as a string in JSON format, or an error message
+ */
+export function ctx_yaml_dump(ctx?: string | null): string;
+
+/**
+ * Get a variable from the Osmia context, based on a given initial context.
+ *
+ * # Arguments
+ * * `var` - The name of the variable to get
+ * * `ctx` - The initial context as a string with YAML format
+ *
+ * # Returns
+ * * `Result<String, String>` - The value of the variable in JSON format, or an error message
+ */
+export function ctx_yaml_dump_variable(_var: string, ctx?: string | null): string;
 
 /**
  * Run Osmia code with the default context
@@ -80,7 +103,9 @@ export interface InitOutput {
     readonly run_json_ctx: (a: number, b: number, c: number, d: number) => [number, number, number, number];
     readonly run_yaml_ctx: (a: number, b: number, c: number, d: number) => [number, number, number, number];
     readonly ctx_json_dump: (a: number, b: number) => [number, number, number, number];
+    readonly ctx_yaml_dump: (a: number, b: number) => [number, number, number, number];
     readonly ctx_json_dump_variable: (a: number, b: number, c: number, d: number) => [number, number, number, number];
+    readonly ctx_yaml_dump_variable: (a: number, b: number, c: number, d: number) => [number, number, number, number];
     readonly __wbindgen_externrefs: WebAssembly.Table;
     readonly __wbindgen_malloc: (a: number, b: number) => number;
     readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;

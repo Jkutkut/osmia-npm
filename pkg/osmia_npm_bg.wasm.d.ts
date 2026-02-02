@@ -6,7 +6,9 @@ export const run_ctx: (a: number, b: number, c: number, d: number) => [number, n
 export const run_json_ctx: (a: number, b: number, c: number, d: number) => [number, number, number, number];
 export const run_yaml_ctx: (a: number, b: number, c: number, d: number) => [number, number, number, number];
 export const ctx_json_dump: (a: number, b: number) => [number, number, number, number];
+export const ctx_yaml_dump: (a: number, b: number) => [number, number, number, number];
 export const ctx_json_dump_variable: (a: number, b: number, c: number, d: number) => [number, number, number, number];
+export const ctx_yaml_dump_variable: (a: number, b: number, c: number, d: number) => [number, number, number, number];
 export const __wbindgen_externrefs: WebAssembly.Table;
 export const __wbindgen_malloc: (a: number, b: number) => number;
 export const __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
