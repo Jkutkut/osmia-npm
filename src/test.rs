@@ -61,6 +61,11 @@ fn ctx_json_dump() {
 }
 
 #[test]
+fn ctx_yaml_dump() {
+	assert!(crate::ctx_yaml_dump(None).is_ok());
+}
+
+#[test]
 fn ctx_json_dump_with_ctx() {
 	let ctx = r#"{"usr":{"name":"Marvin"}}"#;
 	let dump = crate::ctx_json_dump(Some(ctx.to_string()));
@@ -72,9 +77,30 @@ fn ctx_json_dump_with_ctx() {
 }
 
 #[test]
+fn ctx_yaml_dump_with_ctx() {
+	let ctx = "usr:\n  name: Marvin";
+	let dump = crate::ctx_yaml_dump(Some(ctx.to_string()));
+	assert!(dump.is_ok());
+	let dump = dump.unwrap();
+	println!("{}", dump);
+	assert!(dump.contains(r#""usr":{"#));
+	assert!(dump.contains(r#""value":"Marvin""#));
+}
+
+#[test]
 fn ctx_json_dump_variable() {
 	let ctx = r#"{"usr":{"name":"Marvin"}}"#;
 	let dump = crate::ctx_json_dump_variable("usr.name", Some(ctx.to_string()));
+	assert!(dump.is_ok());
+	let dump = dump.unwrap();
+	println!("{}", dump);
+	assert!(dump.contains(r#""value":"Marvin""#));
+}
+
+#[test]
+fn ctx_yaml_dump_variable() {
+	let ctx = "usr:\n  name: Marvin";
+	let dump = crate::ctx_yaml_dump_variable("usr.name", Some(ctx.to_string()));
 	assert!(dump.is_ok());
 	let dump = dump.unwrap();
 	println!("{}", dump);
